@@ -116,7 +116,9 @@ class NemoDecompiler {
                     }
                 }
                 let i = 0
-                for (let v in usrimg) {
+                // 谨防 of 写成 in 大坑
+                for (let v of usrimg) {
+                    console.log(v)
                     let n = await this.buildResource(f_material, v.url);
                     user_img.user_img_dict[v.id] = {
                         id: v.id,
