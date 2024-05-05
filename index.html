@@ -63,11 +63,17 @@
     </div>
   </div>
   
-  <div class="center" style="margin-top: 35px;">
-    <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme qd">反编译，启动！</button>
+  <div class="mdui-progress center" style="margin-top: 20px;margin-left: 30px;margin-right: 30px;width: auto;">
+    <div class="mdui-progress-determinate progress"></div>
   </div>
   
-  <h4 class="center" style="margin: 50px;">温馨提示：目前本具无法获取原项目的云变量信息，且你需要一些手段去导入反编译出来的项目<br/>本工具仅供学习使用，作者不会对本项目造成的任何后果承担任何责任，望周知！</h3>
+  <div class="center" style="margin-top: 20px;">
+    <button class="inline mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme qd">反编译，启动！</button>
+    <div class="inline" style="margin: 2px"></div>
+    <button class="inline mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme xz">下载还原结果</button>
+  </div>
+  
+  <h4 class="center" style="margin: 43px;">温馨提示：目前本具无法获取原项目的云变量信息，且你需要一些手段去导入反编译出来的项目<br/>本工具仅供学习使用，作者不会对本项目造成的任何后果承担任何责任，望周知！</h3>
   
   <div class="center">
     <h4 class="mdui-text-color-theme inline" onclick="mdui.alert('例如 https://nemo.codemao.cn/qrcode?type=1&workid=224218831， 224218831 就是这个作品的 WorkID 啦<br/><br/>本项目仅对 Nemo 作品有效', ()=>{}, {confirmText:'好'})">如何获取WorkID</h4>
@@ -78,10 +84,17 @@
   <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
   <script src="index.js"></script>
   <script>
+        let pgr = $(".progress")
+        let cache
         $(".qd").click(() => {
-            NemoDecompiler.decompile($(".myid").val(), $(".workid").val()).then((data) => {
-                download(data, "source.zip")
+            NemoDecompiler.decompile($(".myid").val(), $(".workid").val(), (n) => {
+                pgr.css("width", (n * 100) + "%")
+            }).then((data) => {
+                cache = data
             })
+        })
+        $(".xz").click(() => {
+            download(cache, "source.zip")
         })
   </script>
 </body>

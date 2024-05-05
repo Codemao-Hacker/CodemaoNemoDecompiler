@@ -47,9 +47,11 @@ class Hash {
 
 // 核心类：反编译
 class NemoDecompiler {
-    static async decompile(user_id, work_id) {
+    static async decompile(user_id, work_id, onUpdate) {
+        if (!onUpdate) onUpdate = () => {}
         return new Promise(async(res, rej) => {
             try {
+                onUpdate(0)
                 // 初始化压缩包
                 let zip = new JSZip();
                 let f_user = zip.folder(user_id + "");
@@ -101,17 +103,27 @@ class NemoDecompiler {
                 f_work.file(work_id + ".bcm", JSON.stringify(bcm));
 
                 // workid.userimg
+                let usrimg = []
                 for (let k in bcm.styles.styles_dict) {
                     // 将自己的资源文件从远程文件导入进去
                     let url = bcm.styles.styles_dict[k].url;
                     if (url) {
                         // 获取资源文件，加到资源清单
-                        let n = await this.buildResource(f_material, url);
-                        user_img.user_img_dict[k] = {
+                        usrimg.push({
                             id: k,
-                            path: user_id + "/user_material/" + n
-                        };
+                            url: url
+                        })
                     }
+                }
+                let i = 0
+                for (let v in usrimg) {
+                    let n = await this.buildResource(f_material, v.url);
+                    user_img.user_img_dict[v.id] = {
+                        id: v.id,
+                        path: user_id + "/user_material/" + n
+                    };
+                    i++;
+                    onUpdate(i / usrimg.length)
                 }
                 f_work.file(work_id + ".userimg", JSON.stringify(user_img));
 
@@ -124,6 +136,8 @@ class NemoDecompiler {
                 meta.publish_preview = info.preview;
                 f_work.file(work_id + ".cover", await Ajax.get(info.preview));
                            
+                onUpdate(1)
+                
                 // 打包项目源代码
                 zip.generateAsync({
                     type: "blob"
