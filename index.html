@@ -78,7 +78,7 @@
   <div class="center" style="margin: -16px;">
     <h4 class="mdui-text-color-theme inline" onclick="mdui.alert('例如 https://nemo.codemao.cn/qrcode?type=1&workid=224218831， 224218831 就是这个作品的 WorkID 啦<br/><br/>本项目仅对 Nemo 作品有效', ()=>{}, {confirmText:'好'})">如何获取WorkID</h4>
     <h4 class="inline"> | </h4>
-    <h4 class="mdui-text-color-theme inline" onclick="mdui.alert('Nemo Player 在打开时会获取作品的源代码进行运行，并且 Nemo 客户端生成的项目文件里面也有很多明显的资源定义<br/><br/>结合爬取 bcm 文件进行分析，几乎可以还原整个项目的文件<br/><br/>流程如下：<br/>获取作品信息 -> 获取项目的 bcm 文件 -> 分析资源取用链 -> 还原资源库 -> 还原项目的 meta 文件 -> 打包成 zip -> 完成<br/>但是最严重的问题是，这个接口好像没提供云变量的查询（有待考证），因此不支持含云作品的修复，但也足矣了<br/><br/>具体细节可以去我的项目仓库 CodemaoNemoDecompiler 查找哦', ()=>{}, {confirmText:'懂了'})">工作原理</h4>
+    <h4 class="mdui-text-color-theme inline" onclick="mdui.alert('Nemo Player 在打开时会获取作品的源代码进行运行，并且 Nemo 客户端生成的项目文件里面也有很多明显的资源定义<br/><br/>结合爬取 bcm 文件进行分析，几乎可以还原整个项目的文件<br/><br/>流程如下：<br/>获取作品信息 -> 获取项目的 bcm 文件 -> 分析资源取用链 -> 还原资源库 -> 还原项目的 meta 文件 -> 打包成 zip -> 完成<br/>目前测试结果：除非是Nemo客户端导致的问题，否则都能正常运行，云变量也会按照预期<br/><br/>具体细节可以去我的项目仓库 CodemaoNemoDecompiler 查找哦', ()=>{}, {confirmText:'懂了'})">工作原理</h4>
   </div>
   
   <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
