@@ -144,7 +144,7 @@ class NemoDecompiler {
                 zip.generateAsync({
                     type: "blob"
                 })
-                    .then((data) => res(data));
+                    .then((data) => res(data, info));
             } catch (e) {
                 rej(e);
             }
@@ -161,5 +161,3 @@ class NemoDecompiler {
         return n;
     }
 }
-
-console.log("测试")

@@ -88,15 +88,17 @@
   <script>
         let pgr = $(".progress")
         let cache
+        let info
         $(".qd").click(() => {
             NemoDecompiler.decompile($(".myid").val(), $(".workid").val(), (n) => {
                 pgr.css("width", (n * 100) + "%")
-            }).then((data) => {
+            }).then((data, i) => {
                 cache = data
+                info = i
             })
         })
         $(".xz").click(() => {
-            download(cache, "source.zip")
+            download(cache, "[Nemo]" + info.name + ".zip")
         })
   </script>
 </body>
