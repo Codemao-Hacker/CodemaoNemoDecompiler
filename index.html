@@ -92,9 +92,9 @@
         $(".qd").click(() => {
             NemoDecompiler.decompile($(".myid").val(), $(".workid").val(), (n) => {
                 pgr.css("width", (n * 100) + "%")
-            }).then((data, i) => {
-                cache = data
-                info = i
+            }).then((data) => {
+                cache = data.data
+                info = data.info
             })
         })
         $(".xz").click(() => {
