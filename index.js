@@ -141,10 +141,9 @@ class NemoDecompiler {
                 onUpdate(1)
                 
                 // 打包项目源代码
-                zip.generateAsync({
+                res(await zip.generateAsync({
                     type: "blob"
-                })
-                    .then((data) => res(data, info));
+                }), info)
             } catch (e) {
                 rej(e);
             }
