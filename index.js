@@ -133,8 +133,10 @@ class NemoDecompiler {
 
                 // workid.bcm -> audios.sounds: id, name, url, ext
                 
-                for (let v of bcm.audios.sounds)
+                for (let k in bcm.audios.sounds) {
+                    let v = bcm.audios.sounds[k]
                     await this.buildAudioResource(f_record, v.url, v.id, v.ext)
+                }
 
                 // workid.meta
                 meta.bcm_name = info.name;
