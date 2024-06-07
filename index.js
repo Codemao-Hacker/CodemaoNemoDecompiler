@@ -133,6 +133,7 @@ class NemoDecompiler {
                 f_work.file(work_id + ".userimg", JSON.stringify(user_img));
 
                 // workid.bcm -> audios.sounds: id, name, url, ext
+                // 谨防Object不可遍历大坑
                 console.log(bcm.audios.sounds)
                 for (let k of Object.keys(bcm.audios.sounds)) {
                     let v = bcm.audios.sounds[k]
