@@ -102,6 +102,7 @@ class NemoDecompiler {
                 // 谨防JSON数据大坑 害得我调试两年半 QSWL
                 let bcm = await Ajax.getJson(meta.bcm_url);
                 f_work.file(work_id + ".bcm", JSON.stringify(bcm));
+                console.log(bcm)
 
                 // workid.userimg
                 let usrimg = []
@@ -132,11 +133,9 @@ class NemoDecompiler {
                 f_work.file(work_id + ".userimg", JSON.stringify(user_img));
 
                 // workid.bcm -> audios.sounds: id, name, url, ext
-                
-                for (let k in bcm.audios.sounds) {
-                    let v = bcm.audios.sounds[k]
+                console.log(bcm.audios.sounds)
+                for (let v of bcm.audios.sounds)
                     await this.buildAudioResource(f_record, v.url, v.id, v.ext)
-                }
 
                 // workid.meta
                 meta.bcm_name = info.name;
