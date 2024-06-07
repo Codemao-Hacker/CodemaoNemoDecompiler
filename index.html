@@ -70,7 +70,7 @@
   <div class="center" style="margin-top: 20px;">
     <button class="inline mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme qd">反编译，启动！</button>
     <div class="inline" style="margin: 2px"></div>
-    <button class="inline mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme xz">下载还原结果</button>
+    <button class="inline mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme xz" disabled>下载还原结果</button>
   </div>
   
   <h4 class="center" style="margin: 43px;">新版 Nemo 的文件结构有所不同，更推荐降级到 4.5.0 加载反编译出来的代码(<a class="mdui-text-color-theme inline" href="https://github.com/Codemao-Hacker/CodemaoNemoDecompiler/issues/1">Issue #1</a>)<br/>本工具仅供学习使用，作者不会对本项目造成的任何后果承担任何责任！</h3>
@@ -90,11 +90,13 @@
         let cache
         let info
         $(".qd").click(() => {
+            $(".xz").prop('disabled', true)
             NemoDecompiler.decompile($(".myid").val(), $(".workid").val(), (n) => {
                 pgr.css("width", (n * 100) + "%")
             }).then((data) => {
                 cache = data.data
                 info = data.info
+                $(".xz").prop('disabled', false)
             })
         })
         $(".xz").click(() => {

@@ -58,6 +58,7 @@ class NemoDecompiler {
                 let f_material = f_user.folder("user_material");
                 let f_works = f_user.folder("user_works");
                 let f_work = f_works.folder(work_id + "");
+                let f_record = f_work.folder("record");
                 // 储存了用户定义的资源，如果缺失会导致项目无法打开
                 let user_img = {
                     user_img_dict: {},
@@ -115,11 +116,12 @@ class NemoDecompiler {
                         })
                     }
                 }
+
                 let i = 0
                 // 谨防 of 写成 in 大坑
                 for (let v of usrimg) {
                     console.log(v)
-                    let n = await this.buildResource(f_material, v.url);
+                    let n = await this.buildImageResource(f_material, v.url);
                     user_img.user_img_dict[v.id] = {
                         id: v.id,
                         path: user_id + "/user_material/" + n
@@ -128,6 +130,11 @@ class NemoDecompiler {
                     onUpdate(i / usrimg.length)
                 }
                 f_work.file(work_id + ".userimg", JSON.stringify(user_img));
+
+                // workid.bcm -> audios.sounds: id, name, url, ext
+                
+                for (let v of bcm.audios.sounds)
+                    await this.buildAudioResource(f_record, v.url, v.id, v.ext)
 
                 // workid.meta
                 meta.bcm_name = info.name;
@@ -149,12 +156,20 @@ class NemoDecompiler {
             }
         });
     }
-    static async buildResource(m, url) {
+    static async buildImageResource(m, url) {
         let data = await Ajax.getRaw(url);
         // 截至 Nemo 4.5.0，命名不按照规范项目也不会无法打开
         // 因此我懒得研究命名了
         let n = Hash.sha256(url) + ".webp";
         m.file(n, data, {
+            binary: true,
+        });
+        return n;
+    }
+    static async buildAudioResource(r, url, id, ext) {
+        let data = await Ajax.getRaw(url);
+        let n = id + "." + ext;
+        r.file(n, data, {
             binary: true,
         });
         return n;
