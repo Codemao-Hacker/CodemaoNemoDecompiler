@@ -97,7 +97,7 @@
                 cache = data.data
                 info = data.info
                 $(".xz").prop('disabled', false)
-            })
+            }).catch((e) => alert('反编译出错: ' + e))
         })
         $(".xz").click(() => {
             download(cache, "[Nemo]" + info.name + ".zip")
