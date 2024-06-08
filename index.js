@@ -118,7 +118,7 @@ class NemoDecompiler {
                     }
                 }
                 
-                let len = Object.keys(bcm.audios.sounds) + usrimg.length;
+                let len = Object.keys(bcm.audios.sounds).length + usrimg.length;
 
                 let i = 0;
                 // 谨防 of 写成 in 大坑
