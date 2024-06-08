@@ -139,8 +139,8 @@ class NemoDecompiler {
                 console.log(bcm.audios.sounds)
                 for (let k of Object.keys(bcm.audios.sounds)) {
                     let v = bcm.audios.sounds[k];
-                    console.log(v)
-                    await this.buildAudioResource(f_record, v.url, v.id, v.ext);
+                    console.log(v);
+                    console.log(await this.buildAudioResource(f_record, v.url, v.id, v.ext));
                     i++;
                     onUpdate(i / len);
                 }
