@@ -117,8 +117,10 @@ class NemoDecompiler {
                         })
                     }
                 }
+                
+                let len = Object.keys(bcm.audios.sounds) + usrimg.length;
 
-                let i = 0
+                let i = 0;
                 // 谨防 of 写成 in 大坑
                 for (let v of usrimg) {
                     console.log(v)
@@ -128,7 +130,7 @@ class NemoDecompiler {
                         path: user_id + "/user_material/" + n
                     };
                     i++;
-                    onUpdate(i / usrimg.length)
+                    onUpdate(i / len);
                 }
                 f_work.file(work_id + ".userimg", JSON.stringify(user_img));
 
@@ -136,8 +138,10 @@ class NemoDecompiler {
                 // 谨防Object不可遍历大坑
                 console.log(bcm.audios.sounds)
                 for (let k of Object.keys(bcm.audios.sounds)) {
-                    let v = bcm.audios.sounds[k]
-                    await this.buildAudioResource(f_record, v.url, v.id, v.ext)
+                    let v = bcm.audios.sounds[k];
+                    await this.buildAudioResource(f_record, v.url, v.id, v.ext);
+                    i++;
+                    onUpdate(i / len);
                 }
 
                 // workid.meta
@@ -149,12 +153,12 @@ class NemoDecompiler {
                 meta.publish_preview = info.preview;
                 f_work.file(work_id + ".cover", await Ajax.get(info.preview));
                            
-                onUpdate(1)
+                onUpdate(1);
                 
                 // 打包项目源代码
                 res({data: await zip.generateAsync({
                     type: "blob"
-                }), info: info})
+                }), info: info});
             } catch (e) {
                 rej(e);
             }
