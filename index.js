@@ -166,7 +166,11 @@ class NemoDecompiler {
         });
     }
     static async buildImageResource(m, url) {
-        let data = await Ajax.getRaw(url);
+        try {
+            data = await Ajax.getRaw(url);
+        } catch(e) {
+            data = "HTTP请求失败: " + e
+        }
         // 截至 Nemo 4.5.0，命名不按照规范项目也不会无法打开
         // 因此我懒得研究命名了
         let n = Hash.sha256(url) + ".webp";
@@ -176,7 +180,12 @@ class NemoDecompiler {
         return n;
     }
     static async buildAudioResource(r, url, id, ext) {
-        let data = await Ajax.getRaw(url);
+        let data
+        try {
+            data = await Ajax.getRaw(url);
+        } catch(e) {
+            data = "HTTP请求失败: " + e
+        }
         let n = id + "." + ext;
         r.file(n, data, {
             binary: true,
