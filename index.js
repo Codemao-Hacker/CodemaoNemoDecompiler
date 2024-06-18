@@ -166,6 +166,7 @@ class NemoDecompiler {
         });
     }
     static async buildImageResource(m, url) {
+        let data = ""
         try {
             data = await Ajax.getRaw(url);
         } catch(e) {
@@ -180,7 +181,7 @@ class NemoDecompiler {
         return n;
     }
     static async buildAudioResource(r, url, id, ext) {
-        let data
+        let data = ""
         try {
             data = await Ajax.getRaw(url);
         } catch(e) {
